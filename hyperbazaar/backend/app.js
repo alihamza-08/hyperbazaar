@@ -29,7 +29,8 @@ app.use("/api/vi/bid",bid);
 const PORT = 3000;
 
 connectdb().then(() => {
-   app.listen(PORT, () => {
+   app.listen(PORT, '0.0.0.0', () => {
       console.log(`Server is running at port : ${PORT}`);
    });
 });
+

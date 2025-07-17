@@ -14,7 +14,7 @@ import InventoryForm from "./Components/retailerStore/StoreFind";
 import DashboardLayout from "./Components/Layout/DashboardLayout";
 import Dashboard from "./Components/pages/dashboard/admin/Dashboard";
 import Category from "./Components/pages/dashboard/admin/CategoryManagement";
-import Order from "./Components/pages/dashboard/admin/order";
+import Order from "./Components/pages/dashboard/admin/Order";
 import ProductManagment from "./Components/pages/dashboard/admin/ProductManagment";
 import Alluser from "./Components/Layout/Alluser";
 import Users from "./Components/pages/dashboard/admin/Users";
@@ -30,7 +30,7 @@ import Categories from "./Components/AllCategories/Categories";
 import CategoryProduct from "./Components/AllCategories/CategoryProduct";
 import FindNearestStore from "./Components/retailerStore/StoreFind";
 import FindStoreForm from "./Components/retailerStore/FindStoreForm";
-import StoreFind from "./Components/retailerStore/StoreFind";
+import StoreFind from "./Components/retailerStore/StoreFind"
 import CreateStoreForm from "./Components/retailerStore/StoreCreation";
 import SingleProduct from "./Components/Products/ProductCard/SingleProduct";
 import FindStore from "./Components/retailerStore/FindStore";
