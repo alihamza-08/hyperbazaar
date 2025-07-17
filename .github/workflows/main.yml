@@ -24,15 +24,15 @@ jobs:
         npm install
         npm run build
 
-    - name: Copy dist/ files to EC2
+    - name: Copy frontend project to EC2
       uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ec2-user
         key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
-        source: "hyperbazaar/frontendweb/grocerry/dist"
-        target: "/home/ec2-user/frontend"
+        source: "hyperbazaar/frontendweb/grocerry"
+        target: "/home/ec2-user"
 
     - name: SSH into EC2 and Run Docker
       uses: appleboy/ssh-action@master
@@ -41,7 +41,7 @@ jobs:
         username: ec2-user
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          cd /home/ec2-user/frontend
+          cd /home/ec2-user/grocerry
           docker build -t my-frontend .
           docker stop frontend || true
           docker rm frontend || true
