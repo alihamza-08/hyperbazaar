@@ -11,41 +11,29 @@ jobs:
     timeout-minutes: 30
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
+      - name: Copy frontend source code to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          source: "hyperbazaar/frontendweb/grocerry"
+          target: "/home/ec2-user"
 
-    - name: Install Dependencies
-      run: npm install
-      working-directory: ./hyperbazaar/frontendweb/grocerry
-
-    - name: Build Vite Frontend
-      run: npm run build
-      working-directory: ./hyperbazaar/frontendweb/grocerry
-
-    - name: Copy frontend project to EC2
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ec2-user
-        key: ${{ secrets.EC2_SSH_KEY }}
-        port: 22
-        source: "hyperbazaar/frontendweb/grocerry"
-        target: "/home/ec2-user"
-
-    - name: SSH into EC2 and Run Docker
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ec2-user
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          cd /home/ec2-user/hyperbazaar/frontendweb/grocerry
-          docker build -t my-frontend .
-          docker stop frontend || true
-          docker rm frontend || true
-          docker run -d -p 80:80 --name frontend my-frontend
+      - name: SSH into EC2 and Build + Run Docker
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: |
+            cd /home/ec2-user/hyperbazaar/frontendweb/grocerry
+            docker build -t my-frontend .
+            docker stop frontend || true
+            docker rm frontend || true
+            docker run -d -p 80:80 --name frontend my-frontend
