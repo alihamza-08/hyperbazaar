@@ -19,11 +19,13 @@ jobs:
       with:
         node-version: 18
 
-    - name: Install Dependencies & Build Frontend
-      run: |
-        cd ./hyperbazaar/frontendweb/grocerry
-        npm install
-        npm run build
+    - name: Install Dependencies
+      run: npm install
+      working-directory: ./hyperbazaar/frontendweb/grocerry
+
+    - name: Build Vite Frontend
+      run: npm run build
+      working-directory: ./hyperbazaar/frontendweb/grocerry
 
     - name: Copy frontend project to EC2
       uses: appleboy/scp-action@master
