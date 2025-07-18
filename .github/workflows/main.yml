@@ -41,7 +41,7 @@ jobs:
         username: ec2-user
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          cd /home/ec2-user/grocerry
+          cd /home/ec2-user/hyperbazaar/frontendweb/grocerry
           docker build -t my-frontend .
           docker stop frontend || true
           docker rm frontend || true
